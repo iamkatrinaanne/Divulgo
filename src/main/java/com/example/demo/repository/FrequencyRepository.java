@@ -14,7 +14,7 @@ import java.util.List;
 public interface FrequencyRepository extends JpaRepository<Frequency, Integer> {
 
 //    @Query("SELECT Frequency.frequency from Ngram, Frequency where Ngram.words= Frequency.word")
-    List<Frequency> findByNgramId(int ngramId);
+    Frequency findByArtId(int artId);
 
 
 //    Frequency findByNgramIdandFreqId(int ngramId,int freqId);

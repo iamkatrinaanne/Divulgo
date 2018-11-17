@@ -58,27 +58,16 @@
             <div class="container-fluid">
                 <ul class="navbar-mobile__list list-unstyled">
                     <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        <a class="js-arrow" href="/goIndex">
+                            <i class="fas fa-tachometer-alt"></i>Train</a>
 
                     </li>
 
                     <li>
-                        <a href="#">
-                            <i class="fas fa-calendar-alt"></i>Calendar123</a>
+                        <a href="/goTest">
+                            <i class="fas fa-copy"></i>Test</a>
                     </li>
-                    <li>
-                        <a href="/getArticles">
-                            <i class="fas fa-copy"></i>Articles</a>
-                    </li>
-                    <li>
-                        <a href="/getNgrams">
-                            <i class="fas fa-copy"></i>Bag of Words</a>
-                    </li>
-                    <li>
-                        <a href="/getExam">
-                            <i class="fas fa-copy"></i>Document Term</a>
-                    </li>
+
                 </ul>
             </div>
         </nav>
@@ -89,28 +78,21 @@
     <aside class="menu-sidebar d-none d-lg-block">
         <div class="logo">
             <a href="#">
-                <img src="images/icon/logo.png" alt="Cool Admin" />
+                <img src="images/icon/divulgo.png" alt="Cool Admin" />
             </a>
         </div>
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
                     <li class="active has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        <a class="js-arrow" href="/goIndex">
+                            <i class="fas fa-tachometer-alt"></i>Train</a>
 
                     </li>
+
                     <li>
-                        <a href="/getArticles">
-                            <i class="fas fa-copy"></i>Articles</a>
-                    </li>
-                    <li>
-                        <a href="/getNgrams">
-                            <i class="fas fa-copy"></i>Bag of Words</a>
-                    </li>
-                    <li>
-                        <a href="/getExam">
-                            <i class="fas fa-copy"></i>Document Term</a>
+                        <a href="/goTest">
+                            <i class="fas fa-copy"></i>Test</a>
                     </li>
 
                 </ul>
@@ -144,26 +126,15 @@
                                     <div class="info clearfix">
                                         <div class="image">
                                             <a href="#">
-                                                <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                                <img src="images/icon/person.png" alt="John Doe" />
                                             </a>
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a href="#">john doe</a>
+                                                <span th:text="${username}"></span>
                                             </h5>
-                                            <span class="email">johndoe@example.com</span>
+                                            <span th:text="${email}"></span>
                                         </div>
-                                    </div>
-                                    <div class="account-dropdown__body">
-                                        <div class="account-dropdown__item">
-                                            <a href="#">
-                                                <i class="zmdi zmdi-account"></i>Account</a>
-                                        </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="#">
-                                                <i class="zmdi zmdi-settings"></i>Setting</a>
-                                        </div>
-
                                     </div>
                                     <div class="account-dropdown__footer">
                                         <a href="#">
@@ -189,10 +160,11 @@
                         <div class="col-md-12">
                             <!-- DATA TABLE-->
                             <div class="table-responsive m-b-40">
-                                <table class="table table-borderless table-data3">
-                                    <thead>
-                                    <tr th:each="j: ${arts}">
-                                        <th th:text="${j.articleId}"></th>
+                                <table class="table table-borderless table-data3" th:each="a: ${arts}">
+                                    <thead th:text="${a.articleId}">
+                                    <tr>
+                                        <th>Word</th>
+                                        <th>Frequency</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -200,7 +172,6 @@
                                         <td th:text="${i.word}"></td>
                                         <td th:text="${i.frequency}"></td>
                                         <!--<td th:text="${i.wordCount}"></td>-->
-
                                     </tr>
 
                                     </tbody>
@@ -252,3 +223,4 @@
 
 </html>
 <!-- end document-->
+

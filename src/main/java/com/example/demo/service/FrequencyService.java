@@ -21,10 +21,12 @@ public class FrequencyService {
         frequencyRepository.save(frequency);
     }
 //
-    public List <Frequency> findByNgramId(int ngramId){
+    public Frequency findByArtId(int artId){
 
-        return frequencyRepository.findByNgramId(ngramId);
+        return frequencyRepository.findByArtId(artId);
     }
+
+
 
 
     public List<Frequency> getAll(){

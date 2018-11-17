@@ -58,26 +58,14 @@
             <div class="container-fluid">
                 <ul class="navbar-mobile__list list-unstyled">
                     <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        <a class="js-arrow" href="/goIndex">
+                            <i class="fas fa-tachometer-alt"></i>Train</a>
 
                     </li>
 
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-calendar-alt"></i>Calendar123</a>
-                    </li>
                     <li>
                         <a href="/getArticles">
-                            <i class="fas fa-copy"></i>Articles</a>
-                    </li>
-                    <li>
-                        <a href="/getNgrams">
-                            <i class="fas fa-copy"></i>Bag of Words</a>
-                    </li>
-                    <li>
-                        <a href="getExam">
-                            <i class="fas fa-copy"></i>Document Term</a>
+                            <i class="fas fa-copy"></i>Test</a>
                     </li>
                 </ul>
             </div>
@@ -96,21 +84,14 @@
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
                     <li class="active has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        <a class="js-arrow" href="/goIndex">
+                            <i class="fas fa-tachometer-alt"></i>Train</a>
 
                     </li>
+
                     <li>
                         <a href="/getArticles">
-                            <i class="fas fa-copy"></i>Articles</a>
-                    </li>
-                    <li>
-                        <a href="/getNgrams">
-                            <i class="fas fa-copy"></i>Bag of Words</a>
-                    </li>
-                    <li>
-                        <a href="/getExam">
-                            <i class="fas fa-copy"></i>Document Term</a>
+                            <i class="fas fa-copy"></i>Test</a>
                     </li>
 
                 </ul>
@@ -144,26 +125,15 @@
                                     <div class="info clearfix">
                                         <div class="image">
                                             <a href="#">
-                                                <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                                <img src="images/icon/person.png" alt="John Doe" />
                                             </a>
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a href="#">john doe</a>
+                                                <span th:text="${username}"></span>
                                             </h5>
-                                            <span class="email">johndoe@example.com</span>
+                                            <span th:text="${email}"></span>
                                         </div>
-                                    </div>
-                                    <div class="account-dropdown__body">
-                                        <div class="account-dropdown__item">
-                                            <a href="#">
-                                                <i class="zmdi zmdi-account"></i>Account</a>
-                                        </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="#">
-                                                <i class="zmdi zmdi-settings"></i>Setting</a>
-                                        </div>
-
                                     </div>
                                     <div class="account-dropdown__footer">
                                         <a href="#">
@@ -183,10 +153,9 @@
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
 
-
-
                     <div class="row m-t-30">
                         <div class="col-md-12">
+                            <form action="/getFreq" method="get" enctype="multipart/form-data" class="form-horizontal">
                             <!-- DATA TABLE-->
                             <div class="table-responsive m-b-40">
                                 <table class="table table-borderless table-data3">
@@ -196,15 +165,28 @@
                                         <th>Title</th>
                                         <th>Content</th>
                                         <th>Agency</th>
-
+                                        <!--<th>-</th>-->
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="i: ${articlelist}">
-                                        <td th:text="${i.articleId}"></td>
+                                       <a href="@{/getFreq}">
+                                           <td th:text="${i.articleId}">
+
+                                       </td>
+                                       </a>
                                         <td th:text="${i.title}"></td>
+
+
                                         <td th:text="${i.content}"></td>
+
+
                                         <td th:text="${i.agency}"></td>
+                                        <!--<td>-->
+                                            <!--<button type="submit" class="btn btn-primary btn-sm">-->
+                                                <!--<i class="fa fa-dot-circle-o"></i> Frequency-->
+                                            <!--</button>-->
+                                        <!--</td>-->
                                     </tr>
 
                                     </tbody>

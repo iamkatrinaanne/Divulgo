@@ -54,6 +54,15 @@ public class HomeController {
     public String gotoLogin(){
         return "login";
     }
+    @RequestMapping("/goTest")
+    public String gotoTest(){
+        return "test";
+    }
+    @RequestMapping("/goLogout")
+    public String goLogout(){
+
+        return "index";
+    }
 
     @PostMapping("/register")
     public String register(HttpServletRequest request){
@@ -65,7 +74,7 @@ public class HomeController {
 
         return "login";
     }
-    @RequestMapping("/login")
+    @RequestMapping("/goIndex")
     public String goIndex(HttpServletRequest request, HttpSession session, Model model) {
         User user= new User();
         String username = request.getParameter("username");
@@ -77,18 +86,15 @@ public class HomeController {
             model.addAttribute("username", username);
             String email=user.getEmail();
             model.addAttribute("email", email);
+
+            int numArticles=articleService.getAll().size();
+            model.addAttribute("numArticles", numArticles);
+
             return "index";}
         else {
             return "login";
         }
     }
-
-    @GetMapping("/getFreq")
-    public String getFreq(){
-        
-        return "docu";
-    }
-
     @PostMapping("/postText")
     public String text(HttpServletRequest request) throws IOException {
         Article article = new Article();
@@ -149,7 +155,7 @@ public class HomeController {
                 String title = document.title();
                 System.out.println("title:" + title);
 
-                String text = document.select("div.post-content-right").text();
+                String text = document.select("div.article-wrap").text();
 
                 System.out.println("article" + text);
                 article.setTitle(title);
@@ -157,8 +163,25 @@ public class HomeController {
                 article.setUrl(url);
                 article.setContent(text);
                 articleService.save(article);
-//                ngram(text);
+                cleanContent(text);
             }
+            else if (m.find()) {
+                System.out.println("THIS IS MANILA BULLETIN");
+                Document document = Jsoup.connect(url).get();
+                String title = document.title();
+                System.out.println("title:" + title);
+
+                String text = document.select("article.uk-article").text();
+
+                System.out.println("article" + text);
+                article.setTitle(title);
+                article.setAgency(agency);
+                article.setUrl(url);
+                article.setContent(text);
+                articleService.save(article);
+                cleanContent(text);
+            }
+
         }
         return "index";
     }
@@ -173,27 +196,25 @@ public class HomeController {
         map.addAttribute("articlelist",articlelist);
         return "articles";
     }
-//
-//
-//    @GetMapping(value="/getNgrams")
-//    public String getNgrams(Model map){
-//        List<Ngram> ngramlist = ngramService.getAllWords();
-////        Collections.sort(ngramlist);
-//        map.addAttribute("ngramlist",ngramlist);
-//        return "ngrams";
-//    }
-//
-//    @GetMapping(value="/getDocu")
-//    public String getDocument(Model map){
-//        List<Ngram> ngramlist = ngramService.getAll();
-//        List<Frequency> frelist = freService.getAll();
-//        List<String> ngrams = new ArrayList<String>();
-//        Collections.sort(ngramlist);
-//        map.addAttribute("frelist",frelist);
-//
-//        return "ngrams";
-//    }
 
+    @GetMapping(value="/getFreq")
+    public String getFreq(HttpServletRequest request) {
+        int number= freService.getAll().size();
+        int artId=Integer.parseInt(request.getParameter("artId"));
+        List<String> allWords = new ArrayList<String>();
+        List<Integer> allFreq = new ArrayList<Integer>();
+//        Frequency sampleFreq = freService.findByArtId(artId);
+
+        for (int c=0; c< number; c++){
+            Frequency sampleFreq = freService.findByArtId(artId);
+            String thisWord= sampleFreq.getWord();
+            int thisFreq=sampleFreq.getFrequency();
+            allWords.add(thisWord);
+            allFreq.add(thisFreq);
+        }
+
+        return "docu";
+    }
     @GetMapping(value="/getExam")
     public String getExam(Model map){
 //        Ngram ngram =findbyAll();
@@ -201,15 +222,16 @@ public class HomeController {
         List <Ngram> ngram = ngramService.getAll();
         List <Frequency> freq = freService.getAll();
         List <Frequency> temp = new ArrayList<>();
-        for (int j=0; j<freq.size(); j++){
-            for (int i=0; i<freq.size(); i++) {
-                temp = freService.findByNgramId(freq.get(i).getNgramId());
-                System.out.println(temp);
-
-            }
-//                Frequency sampleFreq= freService.findByNgramId(temp);
-                System.out.println(freq.get(j).getFrequency());
-            }
+//        for (int j=0; j<freq.size(); j++) {
+//            for (int i = 0; i < freq.size(); i++) {
+//                temp = freService.findByFreqId(freq.get(i).getNgramId());
+//                System.out.println(temp);
+//
+//            }
+//        }
+////                Frequency sampleFreq= freService.findByNgramId(temp);
+//                System.out.println(freq.get(j).getFrequency());
+//            }
 
 //        List<Ngram> ngramlist = ngramService.getAll();
 //        Ngram ngram = ngramService.getAll();
@@ -217,7 +239,8 @@ public class HomeController {
 //        List <Frequency> fre1 = freService.findByNgramIdandFreqId(ngram.getNgramId(), freq.getFreqId());
 ////        Collections.sort(ngramlist);
         map.addAttribute("freq",freq);
-//        map.addAttribute("arts",freq);
+
+        map.addAttribute("arts",arts);
 //        map.addAttribute("freq",freq);
 //        int col = wordlist.size();
 
@@ -230,14 +253,16 @@ public class HomeController {
     public String cleanContent(String content) throws IOException {
 
         System.out.println("done scrape");
-        File file = new File("C:\\Users\\Katrina\\Desktop\\articles\\stopwords.txt");
+        File file = new File("C:\\Users\\Katrina\\Desktop\\stopwords.txt");
         Set<String> stopWords = new LinkedHashSet<String>();
         List<String> ngrams = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new FileReader(file));
-        String regex = "\\d+";
+        String regex = "[A-Z]+";
+        Pattern r = Pattern.compile(regex);
         int wc=0, tempWC=0;
+        String changeWord;
 
-        String[] words =content.replaceAll("[.,!?\\-()]", "").split("\\s+");
+        String[] words =content.replaceAll("[^a-zA-Z ]", "").split("\\s+");
 
         for(String line;(line = br.readLine()) != null;)
             stopWords.add(line.trim());
@@ -249,29 +274,54 @@ public class HomeController {
 
             wordsList.add(word);
         }
-        System.out.println("After for loop:  " + wordsList);
+
+//        System.out.println("After for loop:  " + wordsList);
+
+
+
+
+//        for (int i = 0; i < wordsList.size(); i++) {
 //
+//
+////                Matcher m = r.matcher(wordsList.get(i));
+////                if (m.find( )){
+////                    wordsList.remove(i);
+////                }
+//
+//                for ( int ii = 0; ii < wordsList.get(i).length(); ii++ ) {
+//                    char ch = wordsList.get(i).charAt(ii);
+//                    // check each rule in turn, with code like this:
+//                    if (Character.isUpperCase(ch) == true)
+//                        wordsList.remove(ii);
+//                    System.out.println("removed capital");
+//                }
+//                 for(String j:stopWords) {
+//                     if (j.contains(wordsList.get(i))) {
+//                        wordsList.remove(i);
+//                        System.out.println("removed");
+//
+//                    }
+//            }
+//
+//
+//        }
+
         for (int i = 0; i < wordsList.size(); i++) {
             for(String j:stopWords) {
-//                if (wordsList.get(i).matches(regex)) {
-//                    wordsList.remove(i);
-//                }
-                if (Character.isUpperCase(wordsList.get(i).charAt(0))) {
+
+                Matcher m = r.matcher(wordsList.get(i));
+                if (m.find( )){
                     wordsList.remove(i);
                 }
-                else if (wordsList.get(i).matches(".*[0-9].*")) {
+                else if (j.contains(wordsList.get(i))) {
                     wordsList.remove(i);
-                } else if (j.contains(wordsList.get(i))) {
-                    wordsList.remove(i);
+                    System.out.println("removed");
+
                 }
             }
 
+
         }
-//        for (String str : wordsList) {
-//
-//            System.out.print(str + " ");
-//        }
-//        System.out.println("DONE REMOVING STOP WORDS");
         for (String a:wordsList){
             PorterStemmer stemmer = new PorterStemmer();
             stemmer.setCurrent(a);
@@ -280,6 +330,8 @@ public class HomeController {
             stemList.add(steem);
             System.out.println("stemmer: "+ steem);
         }
+
+
         System.out.println("DONE STEMMING");
 
         Article sampleContent = articleService.findByContent(content);
@@ -334,12 +386,6 @@ public class HomeController {
             }
         }
         System.out.println("DONE NGRAM");
-        return "index";
-    }
-
-    @PostMapping("/postStem")
-    public String postStem(String [] stemList){
-
         return "index";
     }
 

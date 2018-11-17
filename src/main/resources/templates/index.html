@@ -95,23 +95,16 @@
             <div class="container-fluid">
                 <ul class="navbar-mobile__list list-unstyled">
                     <li class="has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        <a class="js-arrow" href="/goIndex">
+                            <i class="fas fa-tachometer-alt"></i>Train</a>
 
                     </li>
 
                     <li>
-                        <a href="/getArticles">
-                            <i class="fas fa-copy"></i>Articles</a>
+                        <a href="/goTest">
+                            <i class="fas fa-copy"></i>Test</a>
                     </li>
-                    <li>
-                        <a href="/getNgrams">
-                            <i class="fas fa-copy"></i>Bag of Words</a>
-                    </li>
-                    <li>
-                        <a href="/getExam">
-                            <i class="fas fa-copy"></i>Document Term</a>
-                    </li>
+
                 </ul>
             </div>
         </nav>
@@ -129,21 +122,14 @@
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
                     <li class="active has-sub">
-                        <a class="js-arrow" href="#">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                        <a class="js-arrow" href="/goIndex">
+                            <i class="fas fa-tachometer-alt"></i>Train</a>
 
                     </li>
+
                     <li>
-                        <a href="/getArticles">
-                            <i class="fas fa-copy"></i>Articles</a>
-                    </li>
-                    <li>
-                        <a href="/getNgrams">
-                            <i class="fas fa-copy"></i>Bag of Words</a>
-                    </li>
-                    <li>
-                        <a href="/getExam">
-                            <i class="fas fa-copy"></i>Document Term</a>
+                        <a href="/goTest">
+                            <i class="fas fa-copy"></i>Test</a>
                     </li>
 
                 </ul>
@@ -182,22 +168,12 @@
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a href="#">john doe</a>
+                                                <span th:text="${username}"></span>
                                             </h5>
-                                            <span class="email">johndoe@example.com</span>
+                                            <span th:text="${email}"></span>
                                         </div>
                                     </div>
-                                    <div class="account-dropdown__body">
-                                        <div class="account-dropdown__item">
-                                            <a href="#">
-                                                <i class="zmdi zmdi-account"></i>Account</a>
-                                        </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="#">
-                                                <i class="zmdi zmdi-settings"></i>Setting</a>
-                                        </div>
 
-                                    </div>
                                     <div class="account-dropdown__footer">
                                         <a href="#">
                                             <i class="zmdi zmdi-power"></i>Logout</a>
@@ -215,6 +191,7 @@
         <div class="main-content">
             <div class="section__content section__content--p30">
                 <div class="container-fluid">
+                    Model Article Counter: <span th:text="${numArticles}"></span>
 
 
                     <div class="row">
@@ -252,10 +229,10 @@
                                                             <div class="col-12 col-md-9">
                                                                 <select name="agency" id="select" class="form-control">
                                                                     <option value="0">Please select</option>
-                                                                    <option value="1">LTO</option>
-                                                                    <option value="2">LRA</option>
-                                                                    <option value="3">PAG-IBIG</option>
-                                                                    <option value="3">SSS</option>
+                                                                    <option value="LTO">LTO</option>
+                                                                    <option value="LRA">LRA</option>
+                                                                    <option value="PAG-IBIG">PAG-IBIG</option>
+                                                                    <option value="SSS">SSS</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -324,9 +301,6 @@
                                                             </div>
                                                         </div>
 
-
-
-
                                                 <div class="card-footer">
                                                     <button type="submit" class="btn btn-primary btn-sm">
                                                         <i class="fa fa-dot-circle-o"></i> Submit
@@ -353,7 +327,6 @@
                         </div>
 
                     </div>
-
 
                 </div>
 

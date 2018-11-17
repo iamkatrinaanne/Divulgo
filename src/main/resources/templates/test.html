@@ -95,27 +95,16 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                            
+                            <a class="js-arrow" href="/goIndex">
+                                <i class="fas fa-tachometer-alt"></i>Train</a>
+
                         </li>
-                        
+
                         <li>
-                            <a href="#">
-                                <i class="fas fa-calendar-alt"></i>Calendar123</a>
+                            <a href="/goTest">
+                                <i class="fas fa-copy"></i>Test</a>
                         </li>
-                        <li>
-                            <a href="map.html">
-                                <i class="fas fa-copy"></i>Articles</a>
-                        </li>
-                        <li>
-                            <a href="map.html">
-                                <i class="fas fa-copy"></i>Bag of Words</a>
-                        </li>
-                        <li>
-                            <a href="map.html">
-                                <i class="fas fa-copy"></i>Document Term</a>
-                        </li>
+
                     </ul>
                 </div>
             </nav>
@@ -126,30 +115,23 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img src="images/icon/logo.png" alt="Cool Admin" />
+                    <img src="images/icon/divulgo.png" alt="Cool Admin" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li class="active has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                            
+                            <a class="js-arrow" href="/goIndex">
+                                <i class="fas fa-tachometer-alt"></i>Train</a>
+
                         </li>
+
                         <li>
-                            <a href="map.html">
-                                <i class="fas fa-copy"></i>Articles</a>
+                            <a href="/goTest">
+                                <i class="fas fa-copy"></i>Test</a>
                         </li>
-                        <li>
-                            <a href="map.html">
-                                <i class="fas fa-copy"></i>Bag of Words</a>
-                        </li>
-                        <li>
-                            <a href="map.html">
-                                <i class="fas fa-copy"></i>Document Term</a>
-                        </li>
-                        
+
                     </ul>
                 </nav>
             </div>
@@ -181,26 +163,15 @@
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                                        <img src="images/icon/person.png" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">john doe</a>
+                                                        <span th:text="${username}"></span>
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
+                                                    <span th:text="${email}"></span>
                                                 </div>
-                                            </div>
-                                            <div class="account-dropdown__body">
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-account"></i>Account</a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Setting</a>
-                                                </div>
-                                                
                                             </div>
                                             <div class="account-dropdown__footer">
                                                 <a href="#">
@@ -240,74 +211,11 @@
                                     <div class="col-sm-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <strong>Input</strong> URL
-                                    <div class="card-body card-block">
+                                        <strong>Input</strong> Article
                                         <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                            
-                                            <div class="row form-group">
-                                                <div class="col col-sm-12">
-                                                    <label for="text-input" class=" form-control-label">URL Input</label>
-                                                </div>
-                                                <div class="col col-sm-12">
-                                                    <input type="text" placeholder="URL" class="form-control">
-                                                
-                                            </div>
-                                            </div>
-                                    
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="select" class=" form-control-label">Select</label>
-                                                </div>
-                                                <br>
-                                                <div class="col-12 col-md-9">
-                                                    <select name="select" id="select" class="form-control">
-                                                        <option value="0">Please select</option>
-                                                        <option value="1">LTO</option>
-                                                        <option value="2">LRA</option>
-                                                        <option value="3">PAG-IBIG</option>
-                                                        <option value="3">SSS</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            
-                                            
-                                        </form>
-                                    </div>
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary btn-sm">
-                                            <i class="fa fa-dot-circle-o"></i> Submit
-                                        </button>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-
-                                <div id="Text" class="tabcontent">
-                                              <div class="col-md-9">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <strong>Input</strong> URL
                                     <div class="card-body card-block">
-                                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                                            
 
-                                            <div class="row form-group">
-                                                <div class="col col-sm-12">
-                                                    <label for="text-input" class=" form-control-label">Title</label>
-                                                </div>
-                                                <div class="col col-sm-12">
-                                                    <input type="text" placeholder="Title" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col col-sm-12">
-                                                    <label for="text-input" class=" form-control-label">URL</label>
-                                                </div>
-                                                <div class="col col-sm-12">
-                                                    <input type="text" placeholder="URL" class="form-control">
-                                                </div>
-                                            </div>
+
                                             <div class="row form-group">
                                                 <div class="col col-sm-12">
                                                     <label for="text-input" class=" form-control-label">Content</label>
@@ -316,40 +224,21 @@
                                                     <textarea name="textarea-input" id="textarea-input" rows="9" cols="80" placeholder="Content" class="form-control"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="row form-group">
-                                                <div class="col col-md-3">
-                                                    <label for="select" class=" form-control-label">Select</label>
-                                                </div>
-                                                <br>
-                                                <div class="col-12 col-md-9">
-                                                    <select name="select" id="select" class="form-control">
-                                                        <option value="0">Please select</option>
-                                                        <option value="1">LTO</option>
-                                                        <option value="2">LRA</option>
-                                                        <option value="3">PAG-IBIG</option>
-                                                        <option value="3">SSS</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                
-                                            
-                                            
-                                        </form>
                                     </div>
                                     <div class="card-footer">
                                         <button type="submit" class="btn btn-primary btn-sm">
                                             <i class="fa fa-dot-circle-o"></i> Submit
                                         </button>
                                     </div>
+                                        </form>
                                 </div>
                                 </div>
                             </div>
-                                </div>
+                        </div>
 
-                                <div id="File Upload" class="tabcontent">
-                                    <h3>Tokyo</h3>
-                                    <p>Tokyo is the capital of Japan.</p>
-                                </div>
+
+
+
                                 </div>
                             </div>
                             
