@@ -18,8 +18,17 @@ public class Article {
     private String title;
     private String content;
     private String agency;
+    private Integer artSize;
 
     public Article() {
+    }
+
+    public Integer getArtSize() {
+        return artSize;
+    }
+
+    public void setArtSize(Integer artSize) {
+        this.artSize = artSize;
     }
 
     public Integer getArticleId() {

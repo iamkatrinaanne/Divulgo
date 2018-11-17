@@ -41,4 +41,13 @@ public class ArticleService {
         return articleRepository.findByContent(content);
     }
 
+    //tfidf
+    public Article findByArticleId(int id){
+        return articleRepository.findByArticleId(id);
+    }
+
+    public List<Article> findAll() {
+        return articleRepository.findAll();
+    }
+
 }
