@@ -1,13 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Article;
-import com.example.demo.entity.Frequency;
-import com.example.demo.entity.Ngram;
-import com.example.demo.entity.User;
-import com.example.demo.service.ArticleService;
-import com.example.demo.service.FrequencyService;
-import com.example.demo.service.NgramService;
-import com.example.demo.service.UserService;
+import com.example.demo.entity.*;
+import com.example.demo.service.*;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -45,6 +39,12 @@ public class HomeController {
 
     @Autowired
     FrequencyService freService;
+
+    @Autowired
+    TfidfService tfidfService;
+
+    @Autowired
+    TestService testService;
 
     @RequestMapping("/registration")
     public String gotoRegistration(){
@@ -341,6 +341,134 @@ public class HomeController {
     public String postStem(String [] stemList){
 
         return "index";
+    }
+    //TFIDF
+    @RequestMapping("/submitTest")
+    public String goSubmit(HttpServletRequest request) throws IOException {
+
+        String content=request.getParameter("textarea-input");
+        String agency=request.getParameter("agency");
+
+//        article.setTitle(title);
+//        article.setTitle(url);
+//        article.setAgency(agency);
+//        article.setContent(content);
+//        articleService.save(article);
+//        cleanContent(content);
+        //stemming
+        String[] words =content.replaceAll("[^a-zA-Z ]", "").split("\\s+");
+
+        ArrayList<String> stemList = new ArrayList<>();
+
+        for (String a:words){
+            PorterStemmer stemmer = new PorterStemmer();
+            stemmer.setCurrent(a);
+            stemmer.stem();
+            String steem=stemmer.getCurrent();
+            stemList.add(steem);
+            System.out.println("stemmer: "+ steem);
+        }
+
+        System.out.println("-----STEM WORDS");
+        for(String s: stemList) {
+            System.out.print(s+"->");
+        }
+
+        List<Tfidf> tfidf6 = tfidfService.findAll();
+        Double love = 0.0;
+        Double lra = 0.0;
+        Double lto = 0.0;
+        Double sss= 0.0;
+        HashMap<String, Double> result = new HashMap<>();
+        HashMap<String, Double> entry = new HashMap<>();
+        for(int i = 0; i<tfidf6.size(); i++){
+            Tfidf tfidf = tfidfService.findByTfidfId(tfidf6.get(i).getTfidfId());
+
+            if(stemList.contains(tfidf.getWord())){
+                if(tfidf.getAgency().equals("LTO")){
+                    lto = lto + tfidf.getTfidfVal();
+                    System.out.println(tfidf.getWord()+"<------>"+tfidf.getAgency());
+                    System.out.println("LTO value computation"+lto);
+
+                }
+                if(tfidf.getAgency().equals("LRA")){
+                    lra = lra + tfidf.getTfidfVal();
+                    System.out.println(tfidf.getWord()+"<------>"+tfidf.getAgency());
+                    System.out.println("LRA value computation"+lra);
+                }
+                if(tfidf.getAgency().equals("PAG-IBIG")){
+                    love = love + tfidf.getTfidfVal();
+                    System.out.println(tfidf.getWord()+"<------>"+tfidf.getAgency());
+                    System.out.println("PAG-IBIG value computation"+love);
+                }
+                if(tfidf.getAgency().equals("SSS")){
+                    sss = sss+tfidf.getTfidfVal();
+                    System.out.println(tfidf.getWord()+"<------>"+tfidf.getAgency());
+                    System.out.println("SSS value computation"+sss);
+                }
+
+            }
+            entry.put("LTO",lto);
+            entry.put("LRA",lra);
+            entry.put("PAG-IBIG",love);
+            entry.put("SSS",sss);
+        }
+        result = maxVal(entry);
+
+        System.out.println("-----------RESULT-------------");
+        for(Map.Entry<String, Double> e: result.entrySet()){
+            Test test = new Test();
+            Article article = new Article();
+            if(e.getKey().equals(agency)){
+                test.setAgency(e.getKey());
+                test.setContent(content);
+                testService.save(test);
+                System.out.println("RESULT IS CORRECT");
+                System.out.println("SCORE: "+e.getValue());
+                System.out.println("AGENCY RESULT: "+e.getKey());
+                System.out.println("DECLARED AGENCY: "+agency);
+
+                //Addition to dataset
+//                article.setAgency(agency);
+//                article.setContent(content);
+//                articleService.save(article);
+//                cleanContent(content);
+            }
+            else{
+                test.setAgency(agency);
+                test.setContent(content);
+                testService.save(test);
+                System.out.println("RESULT IS INCORRECT");
+                System.out.println("SCORE: "+e.getValue());
+                System.out.println("AGENCY RESULT: "+e.getKey());
+                System.out.println("DECLARED AGENCY: "+agency);
+
+                //Addition to dataset
+//                article.setAgency(agency);
+//                article.setContent(content);
+//                articleService.save(article);
+//                cleanContent(content);
+            }
+        }
+
+
+
+        return "test";
+    }
+
+    public HashMap<String, Double> maxVal(HashMap<String, Double> values){
+        HashMap<String, Double> max = new HashMap<>();
+        Double maxval = 0.0;
+        for (Map.Entry<String, Double> entry : values.entrySet()) {
+            if(entry.getValue()>maxval){
+                maxval = entry.getValue();
+            }
+        }
+
+        for (Map.Entry<String, Double> entry : values.entrySet())
+            if(entry.getValue()==maxval)
+                max.put(entry.getKey(),entry.getValue());
+        return max;
     }
 
 //    public static List<String> ngrams(int n, String[] str) {
