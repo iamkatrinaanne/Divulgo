@@ -17,6 +17,7 @@ public class Ngram implements Comparable<Ngram> {
     private Integer ngramId;
     private String words;
     private Integer wordCount;
+    private Integer idfWcount;
 //    private Integer articleId;
 
 //    public Integer getArticleId() {
@@ -26,6 +27,15 @@ public class Ngram implements Comparable<Ngram> {
 //    public void setArticleId(Integer articleId) {
 //        this.articleId = articleId;
 //    }
+
+
+    public Integer getIdfWcount() {
+        return idfWcount;
+    }
+
+    public void setIdfWcount(Integer idfWcount) {
+        this.idfWcount = idfWcount;
+    }
 
     public Integer getNgramId() {
         return ngramId;

@@ -30,4 +30,12 @@ public class NgramService {
 
         return ngramRepository.findAll();
     }
+
+    public List<Ngram> findAll(){
+        return ngramRepository.findAll();
+    }
+
+    public Ngram findByNgramId(Integer id) {
+        return  ngramRepository.findByNgramId(id);
+    }
 }

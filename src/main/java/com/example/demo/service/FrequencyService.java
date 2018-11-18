@@ -21,9 +21,13 @@ public class FrequencyService {
         frequencyRepository.save(frequency);
     }
 //
-    public List <Frequency> findByNgramId(int ngramId){
+//    public List <Frequency> findByNgramId(int ngramId){
+//
+//        return frequencyRepository.findByNgramId(ngramId);
+//    }
 
-        return frequencyRepository.findByNgramId(ngramId);
+    public List<Frequency> findByNgramId(int id){
+        return frequencyRepository.findByNgramId(id);
     }
 
 
@@ -31,6 +35,15 @@ public class FrequencyService {
 
         return frequencyRepository.findAll();
     }
+
+    public List<Frequency> findAll(){
+        return frequencyRepository.findAll();
+    }
+
+    public Frequency findByArtIdAndFreqId(int ai,int fi){
+        return frequencyRepository.findByArtIdAndFreqId(ai,fi);
+    }
+
 
 //    public List <Frequency> findByNgramIdandFreqId(int ngramId, int freqId) {
 //
