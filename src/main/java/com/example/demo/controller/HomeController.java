@@ -230,7 +230,7 @@ public class HomeController {
     public String cleanContent(String content) throws IOException {
 
         System.out.println("done scrape");
-        File file = new File("C:\\Users\\Katrina\\Desktop\\articles\\stopwords.txt");
+        File file = new File("C:\\Users\\Cloie Andrea\\IdeaProjects\\Divulgo\\stopwords.txt");
         Set<String> stopWords = new LinkedHashSet<String>();
         List<String> ngrams = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new FileReader(file));
