@@ -231,13 +231,18 @@ public class HomeController {
 
         System.out.println("done scrape");
         File file = new File("C:\\Users\\Cloie Andrea\\IdeaProjects\\Divulgo\\stopwords.txt");
-        Set<String> stopWords = new LinkedHashSet<String>();
+//        Set<String> stopWords = new LinkedHashSet<String>();
+        ArrayList<String> stopWords = new ArrayList<String>();
         List<String> ngrams = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new FileReader(file));
-        String regex = "\\d+";
+//        String regex = "\\d+";
         int wc=0, tempWC=0;
 
-        String[] words =content.replaceAll("[.,!?\\-()]", "").split("\\s+");
+//        String[] words =content.replaceAll("[^a-zA-Z]", "").split("\\s+");
+        String[] words =content.replaceAll("[^a-zA-Z ]", "").split("\\s+");
+        String regex = "[A-Z]+";
+        Pattern r = Pattern.compile(regex);
+
 
         for(String line;(line = br.readLine()) != null;)
             stopWords.add(line.trim());
@@ -251,27 +256,74 @@ public class HomeController {
         }
         System.out.println("After for loop:  " + wordsList);
 //
-        for (int i = 0; i < wordsList.size(); i++) {
-            for(String j:stopWords) {
+
+        //oldddd
+//        for (int i = 0; i < wordsList.size(); i++) {
+//            for(String j:stopWords) {
+                //---not
 //                if (wordsList.get(i).matches(regex)) {
 //                    wordsList.remove(i);
 //                }
-                if (Character.isUpperCase(wordsList.get(i).charAt(0))) {
-                    wordsList.remove(i);
-                }
-                else if (wordsList.get(i).matches(".*[0-9].*")) {
-                    wordsList.remove(i);
-                } else if (j.contains(wordsList.get(i))) {
-                    wordsList.remove(i);
-                }
-            }
-
-        }
-//        for (String str : wordsList) {
+//                -----
+//                if (Character.isUpperCase(wordsList.get(i).charAt(0))) {
+//                    wordsList.remove(i);
+//                }
+//                else if (wordsList.get(i).matches(".*[0-9].*")) {
+//                    wordsList.remove(i);
+//                } else if (j.contains(wordsList.get(i))) {
+//                    wordsList.remove(i);
+//                }
+//            }
 //
-//            System.out.print(str + " ");
 //        }
-//        System.out.println("DONE REMOVING STOP WORDS");
+        //------------------------------------
+        for (String str : wordsList) {
+
+            System.out.print(str + " ");
+        }
+        System.out.println("DONE REMOVING STOP WORDS");
+//s
+        System.out.println();
+//        try {
+
+//        for(int i = 0; i<tfidf6.size(); i++){
+//            Tfidf tfidf = tfidfService.findByTfidfId(tfidf6.get(i).getTfidfId());
+//
+//            if(stemList.contains(tfidf.getWord())){
+            for (int i = 0; i < wordsList.size(); i++) {
+//                Pattern p = Pattern.compile("TZID=([^:]*):");
+//                Matcher m = p.matcher("DTSTART;TZID=America/Mexico_City:20121125T153000");
+
+//                for (String j : stopWords) {
+
+//                Matcher m = r.matcher(wordsList.get(i));
+                    if (stopWords.contains(wordsList.get(i))) {
+                        wordsList.remove(wordsList.get(i));
+                        System.out.println("remove stop word:"+wordsList.get(i));
+                    }
+//                        if (m.find()) {
+////                            System.out.println(wordsList.get(i));
+//                            wordsList.remove(i);
+//                            System.out.println("removed capital:"+wordsList.get(i));
+//                        }
+                    }
+                for(int i = 0; i < wordsList.size(); i++){
+//                        Matcher m = r.matcher(wordsList.get(i));
+//                        System.out.println("word"+m.group(i));
+                        if (Character.isUpperCase(wordsList.get(i).charAt(0))) {
+//                            System.out.println(wordsList.get(i));
+                            wordsList.remove(wordsList.get(i));
+                            System.out.println("removed capital: "+wordsList.get(i));
+                        }
+                }
+//                }
+
+
+//            }
+//        }
+//        catch (ArrayIndexOutOfBoundsException){
+//
+//        }
         for (String a:wordsList){
             PorterStemmer stemmer = new PorterStemmer();
             stemmer.setCurrent(a);
