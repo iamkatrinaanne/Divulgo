@@ -44,6 +44,10 @@ public class FrequencyService {
         return frequencyRepository.findByArtIdAndFreqId(ai,fi);
     }
 
+    public Frequency findByArtId(int id){
+        return frequencyRepository.findByArtId(id);
+    }
+
 
 //    public List <Frequency> findByNgramIdandFreqId(int ngramId, int freqId) {
 //

@@ -196,6 +196,8 @@
                                         <th>Title</th>
                                         <th>Content</th>
                                         <th>Agency</th>
+                                        <th>Ngram</th>
+                                        <th>Tf-Idf</th>
 
                                     </tr>
                                     </thead>
@@ -205,6 +207,18 @@
                                         <td th:text="${i.title}"></td>
                                         <td th:text="${i.content}"></td>
                                         <td th:text="${i.agency}"></td>
+                                        <form method = "POST" action = "/singleNgram">
+                                            <input type="hidden" th:value="${i.articleId}" name="id">
+                                            <td>
+                                                    <button type="submit" id="erase1">NGRAM</button>
+                                            </td>
+                                        </form>
+                                        <form method = "POST" action = "/singleT">
+                                            <input type="hidden" th:value="${i.articleId}" name="id">
+                                            <td>
+                                                <button type="submit" id="erase1">NGRAM</button>
+                                            </td>
+                                        </form>
                                     </tr>
 
                                     </tbody>

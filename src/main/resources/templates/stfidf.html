@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="css/sample.css">
+</head>
+<body>
+<div class="container">
+    <ul class="tags green" >
+        <li th:each="t : ${singleT}"><a href="#" th:inline="text">[[${t.key}]]<span th:text="${t.value}"></span></a></li>
+    </ul>
+</div>
+</body>
+</html>

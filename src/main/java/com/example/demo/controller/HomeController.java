@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,6 +54,54 @@ public class HomeController {
     @RequestMapping("/goLogin")
     public String gotoLogin(){
         return "login";
+    }
+
+    @RequestMapping("/sample")
+    public String goSample(Model model){
+//      ngram all
+        List<Ngram> ngram = ngramService.findAll();
+        model.addAttribute("ngram",ngram);
+//      tfidf all
+        List<Tfidf> tfidf = tfidfService.findAll();
+        model.addAttribute("tfidf",tfidf);
+        return "sample";
+    }
+
+    @RequestMapping("/singleNgram")
+    public String singleN(HttpServletRequest request, ModelMap m, Model model){
+        String id = request.getParameter("id");
+        Integer id1 = Integer.valueOf(id);
+
+        HashMap<String, Integer> nbysingle = new HashMap<>();
+
+        List<Frequency> frequency = freService.findAll();
+
+        for(int i = 0; i<frequency.size(); i++){
+            if(frequency.get(i).getArtId().equals(id1)){
+                Ngram ngram = ngramService.findByNgramId(frequency.get(i).getNgramId());
+                nbysingle.put(ngram.getWords(),ngram.getWordCount());
+            }
+
+
+        }
+//        m.addAttribute("singleT",tbysingle);
+        m.addAttribute("singleN",nbysingle);
+        return "sngram";
+    }
+
+    @RequestMapping("/singleT")
+    public String singleT(HttpServletRequest request, ModelMap m, Model model) {
+        String id = request.getParameter("id");
+        Integer id1 = Integer.valueOf(id);
+        HashMap<String, Double> tbysingle = new HashMap<>();
+        List<Tfidf> tfidf = tfidfService.findAll();
+        for(int i = 0; i<tfidf.size(); i++){
+            if(tfidf.get(i).getArtId().equals(id1)){
+                tbysingle.put(tfidf.get(i).getWord(),tfidf.get(i).getTfidfVal());
+            }
+        }
+        m.addAttribute("singleT",tbysingle);
+        return "stfidf";
     }
 
     @PostMapping("/register")

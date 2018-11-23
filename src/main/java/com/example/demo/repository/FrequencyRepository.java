@@ -23,4 +23,5 @@ public interface FrequencyRepository extends JpaRepository<Frequency, Integer> {
     Frequency findByFreqId(int id);
     List<Frequency> findAll();
 
+    Frequency findByArtId(int id);
 }

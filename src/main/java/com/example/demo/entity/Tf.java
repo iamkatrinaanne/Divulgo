@@ -20,6 +20,17 @@ public class Tf {
     private String word;
     private Double tfVal;
 
+    //addd
+    private Integer artId;
+
+    public Integer getArtId() {
+        return artId;
+    }
+
+    public void setArtId(Integer artId) {
+        this.artId = artId;
+    }
+
     public String getAgency() {
         return agency;
     }

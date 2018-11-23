@@ -101,6 +101,7 @@ public class TfIdfController {
                tf.setAgency(article1.getAgency());
                tf.setWord(fre1.getWord());
                tf.setFreqId(fre1.getFreqId());
+               tf.setArtId(fre1.getArtId());
                tf.setTfVal(freqq / arts);
                tfService.save(tf);
 //               System.out.println("done tf");
@@ -111,6 +112,7 @@ public class TfIdfController {
                tf5.setAgency(article1.getAgency());
                tf5.setWord(fre1.getWord());
                tf5.setFreqId(fre1.getFreqId());
+               tf5.setArtId(fre1.getArtId());
                tf5.setTfVal(freqq / arts);
                tfService.save(tf1.get(i));
 //               System.out.println("done tf");
@@ -122,6 +124,7 @@ public class TfIdfController {
                tf.setAgency(article1.getAgency());
                tf.setWord(fre1.getWord());
                tf.setFreqId(fre1.getFreqId());
+               tf.setArtId(fre1.getArtId());
                tf.setTfVal(freqq / arts);
                tfService.save(tf);
 //               System.out.println("done tf");
@@ -181,11 +184,12 @@ public class TfIdfController {
                 Idf idf1 = new Idf();
                 Double d = size / Double.valueOf(ngram.getIdfWcount());
 
-                    System.out.println("Idf w count: "+ngram.getIdfWcount());
+                System.out.println("Idf w count: "+ngram.getIdfWcount());
                 Double idff = Math.log(d);
                 idf1.setIdfVal(idff);
                 idf1.setNgramId(ngram.getNgramId());
                 idf1.setFreqId(freq.get(i).getFreqId());
+                idf1.setArtId(freq.get(i).getArtId());
                 idfService.save(idf1);
 
             }
@@ -197,6 +201,7 @@ public class TfIdfController {
                 idf2.setIdfVal(idff);
                 idf2.setNgramId(ngram.getNgramId());
                 idf2.setFreqId(freq.get(i).getFreqId());
+                idf2.setArtId(freq.get(i).getArtId());
                 idfService.save(idf2);
 //                System.out.println("done idf");
             }
@@ -209,6 +214,7 @@ public class TfIdfController {
                 idf1.setIdfVal(idff);
                 idf1.setNgramId(ngram.getNgramId());
                 idf1.setFreqId(freq.get(i).getFreqId());
+                idf1.setArtId(freq.get(i).getArtId());
                 idfService.save(idf1);
 //                System.out.println("done idf");
             }
@@ -236,6 +242,7 @@ public class TfIdfController {
                 tfidf.setAgency(tf.get(i).getAgency());
                 tfidf.setTfidfVal(tfidff);
                 tfidf.setFreqId(tf.get(i).getFreqId());
+                tfidf.setArtId(tf.get(i).getArtId());
                 tfidfService.save(tfidf);
             }
             else if(tfidfService.findByFreqId(tf.get(i).getFreqId())!=null){
@@ -247,6 +254,7 @@ public class TfIdfController {
                 tfidf2.setAgency(tf.get(i).getAgency());
                 tfidf2.setTfidfVal(tfidff);
                 tfidf2.setFreqId(tf.get(i).getFreqId());
+                tfidf2.setArtId(tf.get(i).getArtId());
                 tfidfService.save(tfidf2);
 
             }
@@ -260,6 +268,7 @@ public class TfIdfController {
                 tfidf.setAgency(tf.get(i).getAgency());
                 tfidf.setTfidfVal(tfidff);
                 tfidf.setFreqId(tf.get(i).getFreqId());
+                tfidf.setArtId(tf.get(i).getArtId());
                 tfidfService.save(tfidf);
             }
 
@@ -275,6 +284,7 @@ public class TfIdfController {
         TermFrequencyAndInverseTermFrequency();
 
         List<Tfidf> tfidf3 = tfidfService.findAll();
+
         model.addAttribute("tfidf",tfidf3);
 
     return "tfidf";
